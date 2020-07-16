@@ -19,6 +19,7 @@ jobs:
         run: npm install --only=prod
 
       - name: Inject env variables
+        id: env-injection
         run: |
           touch .env
           echo REACT_APP_API_KEY=${{ secrets.REACT_APP_API_KEY }} >> .env
@@ -26,6 +27,7 @@ jobs:
           ls -al
 
       - name: Run the React.js build script
+        if: steps.env-injection.outputs.conclusion == 'success'
         run: npm run build
 
       - name: Archive built files
