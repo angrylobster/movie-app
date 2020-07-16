@@ -15,16 +15,13 @@ jobs:
         with:
           node-version: '12'
 
+      - name: Install packages
+        run: npm install --only=prod
+
       - name: Inject env variables
         run: |
           touch .env
           echo REACT_APP_API_KEY=${{ secrets.REACT_APP_API_KEY }} >> .env
-          echo REACT_APP_FAVORITE_FRUIT=banana >> .env
-          cat .env
-          ls -al
-
-      - name: Install packages
-        run: npm install --only=prod
 
       - name: Run the React.js build script
         run: npm run build
